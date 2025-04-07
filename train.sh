@@ -73,3 +73,9 @@ torchrun --nproc_per_node=8 \
     --dataloader_drop_last True
 
     # --pretrain_mm_mlp_adapter="./checkpoints/projectors/${BASE_RUN_NAME}/mm_projector.bin" \
+
+    # --data_path="/home/ubuntu/dataset/LLaVA-Pretrain/blip_laion_cc_sbu_558k.json" \
+    # --image_folder /home/ubuntu/dataset/LLaVA-Pretrain/ \
+
+    # --data_path="/home/ubuntu/dataset/LLaVA-NeXT-Data/llava_next_raw_format/llava_v1_5_mix665k.json" \
+    # --image_folder /home/ubuntu/dataset/LLaVA-NeXT-Data/llava_next_raw_format/ \
