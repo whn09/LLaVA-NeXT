@@ -3,11 +3,8 @@
 # pip install --upgrade pip  # Enable PEP 660 support.
 # pip install -e ".[train]"
 
-# pip uninstall -y torch torchvision torchaudio bitsandbytes
-# pip install --upgrade torch torchvision torchaudio bitsandbytes
-# pip install flash-attn --no-build-isolation
-
-# pip install -U -r requirements-new.txt
+# pip install --upgrade torch torchvision torchaudio bitsandbytes deepspeed
+# pip install --upgrade flash-attn --no-build-isolation
 
 # mkdir -p checkpoints
 
@@ -33,8 +30,8 @@ torchrun --nproc_per_node=8 \
     --deepspeed scripts/zero3.json \
     --model_name_or_path $LLM_VERSION \
     --version $PROMPT_VERSION \
-    --data_path="/home/ubuntu/dataset/LLaVA-Pretrain/blip_laion_cc_sbu_558k.json" \
-    --image_folder /home/ubuntu/dataset/LLaVA-Pretrain/ \
+    --data_path="/home/ubuntu/dataset/LLaVA-NeXT-Data/llava_next_raw_format/llava_v1_5_mix665k.json" \
+    --image_folder /home/ubuntu/dataset/LLaVA-NeXT-Data/llava_next_raw_format/ \
     --mm_tunable_parts="mm_vision_tower,mm_mlp_adapter,mm_language_model" \
     --mm_vision_tower_lr=2e-6 \
     --vision_tower ${VISION_MODEL_VERSION} \
@@ -43,8 +40,7 @@ torchrun --nproc_per_node=8 \
     --mm_use_im_start_end False \
     --mm_use_im_patch_token False \
     --group_by_modality_length True \
-    --image_aspect_ratio anyres \
-    --image_grid_pinpoints "[(336, 672), (672, 336), (672, 672), (1008, 336), (336, 1008)]" \
+    --image_aspect_ratio pad \
     --mm_patch_merge_type spatial_unpad \
     --bf16 True \
     --run_name $MID_RUN_NAME \
@@ -71,6 +67,9 @@ torchrun --nproc_per_node=8 \
     --torch_compile True \
     --torch_compile_backend "inductor" \
     --dataloader_drop_last True
+
+    # --image_aspect_ratio anyres \
+    # --image_grid_pinpoints "[(336, 672), (672, 336), (672, 672), (1008, 336), (336, 1008)]" \
 
     # --pretrain_mm_mlp_adapter="./checkpoints/projectors/${BASE_RUN_NAME}/mm_projector.bin" \
 
