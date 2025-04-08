@@ -25,7 +25,7 @@ MID_RUN_NAME="llavanext-${VISION_MODEL_VERSION_CLEAN}-${LLM_VERSION_CLEAN}-blip5
 echo "MID_RUN_NAME: ${MID_RUN_NAME}"
 
  # with necessary torchrun information for distributed training\
-torchrun --nproc_per_node=8 \
+WANDB_MODE=offline torchrun --nproc_per_node=8 \
     llava/train/train_mem.py \
     --deepspeed scripts/zero3.json \
     --model_name_or_path $LLM_VERSION \
