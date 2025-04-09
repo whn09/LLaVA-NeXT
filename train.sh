@@ -9,6 +9,7 @@
 # mkdir -p checkpoints
 
 LLM_VERSION="meta-llama/Meta-Llama-3-8B-Instruct"
+# LLM_VERSION="QWen/QWen2.5-7B-Instruct"
 LLM_VERSION_CLEAN="${LLM_VERSION//\//_}"
 VISION_MODEL_VERSION="openai/clip-vit-large-patch14-336"
 VISION_MODEL_VERSION_CLEAN="${VISION_MODEL_VERSION//\//_}"
@@ -47,9 +48,9 @@ WANDB_MODE=offline torchrun --nproc_per_node=8 \
     --run_name $MID_RUN_NAME \
     --output_dir "./checkpoints/${MID_RUN_NAME}" \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 16 \
-    --per_device_eval_batch_size 16 \
-    --gradient_accumulation_steps 1 \
+    --per_device_train_batch_size 8 \
+    --per_device_eval_batch_size 8 \
+    --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 3000 \
@@ -68,6 +69,8 @@ WANDB_MODE=offline torchrun --nproc_per_node=8 \
     --torch_compile True \
     --torch_compile_backend "inductor" \
     --dataloader_drop_last True
+
+    # --deepspeed scripts/zero3.json \
 
     # --image_aspect_ratio anyres \
     # --image_grid_pinpoints "[(336, 672), (672, 336), (672, 672), (1008, 336), (336, 1008)]" \
