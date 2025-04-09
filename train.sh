@@ -21,7 +21,8 @@ BASE_RUN_NAME="llavanext-${LLM_VERSION_CLEAN}-${VISION_MODEL_VERSION_CLEAN}-pret
 echo "BASE_RUN_NAME: ${BASE_RUN_NAME}"
 
 PROMPT_VERSION="llava_llama_3"
-MID_RUN_NAME="llavanext-${VISION_MODEL_VERSION_CLEAN}-${LLM_VERSION_CLEAN}-blip558k_pretrain_plain_la_1_6mix_ft"
+# MID_RUN_NAME="llavanext-${VISION_MODEL_VERSION_CLEAN}-${LLM_VERSION_CLEAN}-blip558k_pretrain_plain_la_1_6mix_ft"
+MID_RUN_NAME="llavanext-${VISION_MODEL_VERSION_CLEAN}-${LLM_VERSION_CLEAN}-llava_v1_5_mix665k"
 echo "MID_RUN_NAME: ${MID_RUN_NAME}"
 
  # with necessary torchrun information for distributed training\
@@ -46,8 +47,8 @@ WANDB_MODE=offline torchrun --nproc_per_node=8 \
     --run_name $MID_RUN_NAME \
     --output_dir "./checkpoints/${MID_RUN_NAME}" \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 8 \
-    --per_device_eval_batch_size 8 \
+    --per_device_train_batch_size 16 \
+    --per_device_eval_batch_size 16 \
     --gradient_accumulation_steps 1 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
